@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	_ "github.com/lib/pq" // Драйвер для PostgreSQL
+	_ "github.com/lib/pq"
 )
 
 // Структуры для данных из БД
@@ -36,9 +36,7 @@ func connectDB() (*sql.DB, error) {
 	return db, nil
 }
 
-// Хэндлеры для API
-
-// Получить все машины пользователя
+// все машины пользователя
 func getUserCars(c echo.Context) error {
 	userID := c.Param("userID")
 	db, err := connectDB()
@@ -66,7 +64,7 @@ func getUserCars(c echo.Context) error {
 	return c.JSON(http.StatusOK, cars)
 }
 
-// Получить все двигатели пользователя (без повторений)
+// все двигатели пользователя
 func getUserEngines(c echo.Context) error {
 	userID := c.Param("userID")
 	db, err := connectDB()
@@ -99,7 +97,7 @@ func getUserEngines(c echo.Context) error {
 	return c.JSON(http.StatusOK, engines)
 }
 
-// Получить двигатель конкретной машины
+// двигатель конкретной машины
 func getCarEngine(c echo.Context) error {
 	carID := c.Param("carID")
 	db, err := connectDB()
@@ -118,7 +116,7 @@ func getCarEngine(c echo.Context) error {
 	return c.JSON(http.StatusOK, engine)
 }
 
-// Получить двигатели по марке машины
+// двигатели по марке
 func getEnginesByCarModel(c echo.Context) error {
 	carModel := c.Param("carModel")
 	db, err := connectDB()
@@ -149,12 +147,12 @@ func getEnginesByCarModel(c echo.Context) error {
 func main() {
 	e := echo.New()
 
-	// Регистрация маршрутов
+	//Регистрация маршрутов
 	e.GET("/users/:userID/cars", getUserCars)
 	e.GET("/users/:userID/engines", getUserEngines)
 	e.GET("/cars/:carID/engine", getCarEngine)
 	e.GET("/cars/model/:carModel/engines", getEnginesByCarModel)
 
-	fmt.Println("Server started on port 8080")
-	e.Logger.Fatal(e.Start(":8080"))
+	fmt.Println("port 1323")
+	e.Logger.Fatal(e.Start(":1323"))
 }

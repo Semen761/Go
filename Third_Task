@@ -41,9 +41,9 @@ func main() {
 			numberChannel <- randomNumber
 		}
 		close(numberChannel)
-	}() // <- Закрываем объявление первой горутины здесь
+	}() // Закрываем объявление первой горутины
 
-	// Горутина обработки чисел полученных из 1-ой горутины
+	// горутина обработки чисел полученных из 1-ой горутины
 	go func() {
 		defer wg.Done()
 		for number := range numberChannel {
@@ -66,14 +66,14 @@ func main() {
 					fmt.Println("Ошибка записи в файл:", err)
 				}
 			}
-			// Небольшая пауза для наглядности
+			// Небольшая пауза для корректной работы
 			time.Sleep(time.Duration(rand.Intn(50)) * time.Millisecond)
 		}
 	}()
 
 	wg.Wait()
 
-	// Выводим содержимое файла
+	// Выводим файл
 	data, err := ioutil.ReadFile(file_Output)
 	if err != nil {
 		fmt.Println("Ошибка чтения файла:", err)

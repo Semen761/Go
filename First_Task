@@ -23,7 +23,6 @@ type User struct {
 	Password string `json:"password" validate:"required"`
 }
 
-// Структура для генерации токена
 type jwtCustomClaims struct {
 	Name  string `json:"name"`
 	Email string `json:"email"`
@@ -41,13 +40,11 @@ func (cv *CustomValidator) Validate(i interface{}) error {
 	return nil
 }
 
-// Функция для хеширования пароля
 func hashPassword(password string) (string, error) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
 	return string(bytes), err
 }
 
-// Функция для сравнения паролей
 func checkPasswordHash(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
@@ -110,10 +107,6 @@ func main() {
 			return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 		}
 
-		// Здесь вы должны получить пользователя из базы данных по email
-		// и сравнить хэши паролей
-
-		// Генерация токена
 		claims := &jwtCustomClaims{
 			u.Name,
 			u.Email,
@@ -132,7 +125,6 @@ func main() {
 		})
 	})
 
-	// Защищенная группа маршрутов
 	r := e.Group("/restricted")
 	r.Use(middleware.JWTWithConfig(middleware.JWTConfig{
 		SigningKey: secretKey,

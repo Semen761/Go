@@ -1,0 +1,21 @@
+CREATE TABLE engines (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(300) UNIQUE NOT NULL
+);
+
+CREATE TABLE cars (
+    id SERIAL PRIMARY KEY,
+    model VARCHAR(300) UNIQUE NOT NULL,
+    engine_id INT REFERENCES engines(id)
+);
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(300) NOT NULL
+);
+
+CREATE TABLE user_cars (
+    user_id INT REFERENCES users(id),
+    car_id INT REFERENCES cars(id),
+    PRIMARY KEY (user_id, car_id)
+);
